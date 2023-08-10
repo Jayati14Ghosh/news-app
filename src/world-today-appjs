@@ -1,0 +1,103 @@
+import {useState, useEffect} from 'react';
+import axios from 'axios';
+import style from '../style.css';
+import noImage from '../images/noImage.jpg';
+import SingleNews from './SingleNews';
+function AllNews(){
+  const [country,setCountry] = useState("in");
+  const [bunchArticles, setBunchArticles] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [totalArticlesNo, setTotalArticlesNo] = useState();
+  const [query, setQuery] = useState("");
+  const [completeQuery, setCompleteQuery] = useState("");
+
+  const API_KEY = "10ca24a83fcc499f994abcf3290517ee"
+  const API_URL = `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=${API_KEY}&q=${completeQuery}`;
+
+  const getNews = async ()=>{
+    const response = await axios.get(API_URL);
+    setBunchArticles(response.data.articles);
+    setTotalArticlesNo(response.data.totalResults);
+  }
+
+  const handleNext = ()=>{
+    setPage(page + 1);
+  }
+
+  const handlePrev = ()=>{
+    setPage(page-1);
+  }
+  const handleCountryChange = (e)=>{
+    setCountry(e.target.value);
+    setPage(1);
+  }
+
+  const handleQueryUpdate =(e)=>{
+    setQuery(e.target.value);
+  }
+
+  const handleSearchSubmit = (e)=>{
+    e.preventDefault();
+    setCompleteQuery(query);
+    setQuery("");
+  }
+
+  const handleBackToOrigin = (e)=>{
+    setCompleteQuery("");
+  }
+
+  useEffect(()=>{
+    getNews()
+  },[country, handleSearchSubmit, completeQuery]);
+
+  return(
+    <>
+    <form onSubmit={handleSearchSubmit}>
+      <input type="text" value={query} onChange={handleQueryUpdate} />
+      <button type="submit">Search</button>
+      <button type="button" onClick={handleBackToOrigin}>Back to origin</button>
+    </form>
+
+    <select value={country} onChange={handleCountryChange}>
+      <option value="in">India</option>
+      <option value="jp">Japan</option>
+      <option value="nl">Netherlands</option>
+      <option value="sa">South Africa</option>
+      <option value="kr">South Korea</option>
+      <option value="us">United States</option>
+    </select>
+    {
+      completeQuery!=""?<p>Showing results for <b>{completeQuery}</b></p>:""
+    }
+    <div className="box-group">
+
+      {
+        bunchArticles.map((item, index)=>
+        <div className="box" key={index}>
+          <SingleNews
+            no={index}
+            title={item.title}
+            description={item.description}
+            link={item.url}
+            img={item.urlToImage}
+            date={item.publishedAt}
+            />
+        </div>
+        )
+      }
+
+    </div>
+    {
+      page>1?<button onClick={handlePrev}>Previous page</button>:""
+    }
+    {
+      totalArticlesNo/page>=10?<button onClick={handleNext}>Next Page</button>:""
+    }
+    <p>totalArticlesNo = {totalArticlesNo} page = {page} now division is {totalArticlesNo/page} </p>
+
+
+    </>
+  )
+}
+export default AllNews
