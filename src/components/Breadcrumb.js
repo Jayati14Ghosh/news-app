@@ -12,8 +12,7 @@ function Breadcrumb({category,country,page,handleCountryChange}){
         {country==='kr'?'South Korea ':''}
         {country==='us'?'United States ':''}
       </h2>
-      <CountryComp
-        country={country}
+      <CountryComp        
         handleCountryChange={handleCountryChange}
       />
     </div>

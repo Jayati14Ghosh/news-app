@@ -8,7 +8,8 @@ import Search from './Search';
 import Breadcrumb from './Breadcrumb';
 import Loader from './Loader';
 
-function AllNews({category}){
+function AllNews(){
+  const [category, setCategory] = useState("general");
   const [country,setCountry] = useState("us");
   const [bunchArticles, setBunchArticles] = useState([]);
   const [page, setPage] = useState(1);
@@ -18,7 +19,7 @@ function AllNews({category}){
   const [completeQuery, setCompleteQuery] = useState("");
   const [loader, setLoader] = useState(true);
 
-  const API_KEY = "f0b22a230a51451fa87bb51d07eccf0e"
+  const API_KEY = "68769665e4e644a8ab24725e2ba11057"
   const API_URL = `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=${API_KEY}&category=${category}&page=${page}&pageSize=${pageSize}&q=${completeQuery}`;
 
   const getNews = async ()=>{
@@ -37,9 +38,17 @@ function AllNews({category}){
     setPage(page-1);
     window.scrollTo(0, 0);
   }
+
   const handleCountryChange = (e)=>{
     setCountry(e.target.value);
     setPage(1);
+    window.scrollTo(0, 0);
+  }
+
+  const handleCategoryChange = (e)=>{
+    setCategory(e.target.value);
+    setPage(1);
+    window.scrollTo(0, 0);
   }
 
   const handleSearchSubmit = (e)=>{
@@ -50,21 +59,22 @@ function AllNews({category}){
     setQuery("");
   }
 
-    const handleQueryUpdate =(e)=>{
-      setQuery(e.target.value);
-    }
+  const handleQueryUpdate =(e)=>{
+    setQuery(e.target.value);
+  }
 
-    const handleBackToOrigin = (e)=>{
-      setCompleteQuery("");
-      setPage(1);
-    }
-
+  const handleBackToOrigin = (e)=>{
+    setCompleteQuery("");
+    setPage(1);
+  }
 
   useEffect(()=>{
     getNews()
-  },[completeQuery, country, page, pageSize]);
+  },[completeQuery, country, page, pageSize, category]);
+
   return(
     <>
+    <div className="container-block">
       <Breadcrumb
         category={category}
         country={country}
@@ -86,30 +96,30 @@ function AllNews({category}){
             {
               loader?<Loader/>:""
             }
-          <div className="boxes-group">
-            {!loader && bunchArticles.map((item, index)=>
-                <div className={`box box-${page}`} key={index}>
-                  <SingleNews
-                    no={index}
-                    title={item.title}
-                    description={item.description}
-                    link={item.url}
-                    img={item.urlToImage}
-                    date={item.publishedAt}
-                    name={item.source.name}
-                    />
-                </div>
-              )
-            }
-          </div>
-          <div className="btn-group">
-              {
-                page>1?<button className="btn-page" onClick={handlePrev}>← Previous page</button>:""
+            <div className="boxes-group">
+              {!loader && bunchArticles.map((item, index)=>
+                  <div className={`box box-${page}`} key={index}>
+                    <SingleNews
+                      no={index}
+                      title={item.title}
+                      description={item.description}
+                      link={item.url}
+                      img={item.urlToImage}
+                      date={item.publishedAt}
+                      name={item.source.name}
+                      />
+                  </div>
+                )
               }
-              {
-                totalArticlesNo/page>=pageSize?<button className="btn-page" onClick={handleNext}>Next Page →</button>:""
-              }
-          </div>
+            </div>
+            <div className="btn-group">
+                {
+                  page>1?<button className="btn-page" onClick={handlePrev}>← Previous page</button>:""
+                }
+                {
+                  totalArticlesNo/page>=pageSize?<button className="btn-page" onClick={handleNext}>Next Page →</button>:""
+                }
+            </div>
         </div>
         <div className="sidebar-group">
           <Search
@@ -119,9 +129,13 @@ function AllNews({category}){
             handleQueryUpdate={handleQueryUpdate}
             handleBackToOrigin={handleBackToOrigin}
           />
-          <Category/>
+          
+          <Category
+            handleCategoryChange={handleCategoryChange}
+          />
         </div>
       </div>
+    </div>
       <p className="d-none">totalArticlesNo = {totalArticlesNo} page = {page} now division is {totalArticlesNo/page} </p>
     </>
   )

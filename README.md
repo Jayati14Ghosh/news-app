@@ -15,6 +15,14 @@ Open **cmd** in news-app folder and run below commands
 
 3. Remove  `/news-app` from URL and voila! React app is running perfectly!
 
+## Packages Installed
+
+1. axios
+2. react-switch
+3. react-tooltip
+
+## Extra api key
+Look for extraApi.md
 
 ## Connect me
 jayatighosh4@gmail.com

@@ -5,7 +5,7 @@ import sa from '../images/sa.jpg';
 import sk from '../images/sk.jpg';
 import us from '../images/us.jpg';
 import { Tooltip as ReactTooltip } from "react-tooltip";
-function CountryComp({country,handleCountryChange}){
+function CountryComp({handleCountryChange}){
   return(
     <>
       <div onChange={handleCountryChange} className="country-group">

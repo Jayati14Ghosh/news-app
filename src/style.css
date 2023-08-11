@@ -200,7 +200,7 @@ body{
   margin-top: 30px;
   margin-bottom: 10px;
 }
-.category-main-group a{
+.category-main-group label{
   text-decoration: none;
   padding: 5px 15px 5px 0;
   margin-bottom: 10px;
@@ -210,26 +210,27 @@ body{
   display: flex;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
 }
-.bg-dark .category-main-group a{
+.bg-dark .category-main-group label{
   color: #fff;
   border-bottom: #fff solid 1px;
 }
-.bg-light .category-main-group a{
+.bg-light .category-main-group label{
   color: #000;
   border-bottom: #000 solid 1px;
 }
-.category-main-group a svg{
+.category-main-group label svg{
   width: 20px;
   height: 20px;
   padding: 5px;
   border-radius: 100%;
 }
-.bg-dark .category-main-group a svg
+.bg-dark .category-main-group label svg
 {
   background: #fff;
 }
-.bg-light .category-main-group a svg
+.bg-light .category-main-group label svg
 {
   background: #333;
 }
