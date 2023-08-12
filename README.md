@@ -3,7 +3,8 @@
 ## Get this project in your local
 
 **Full video guide -**
-Click here - https://github.com/Jayati14Ghosh/news-app/tree/main/src/guide/How--to--run--in--system.mp4
+
+Click here - https://raw.githubusercontent.com/Jayati14Ghosh/news-app/main/src/guide/Full--website--video.mp4
 
 **Step 1 -**
 Open gitbash in your system in any folder and run `git clone https://github.com/Jayati14Ghosh/news-app.git`
@@ -39,15 +40,19 @@ Click here - https://github.com/Jayati14Ghosh/news-app/tree/main/src/guide/Full-
 
 ## Extra api key
 **Error code 429**
+
 This website is made with free api with limited requests. Kindly change api key when you get error code 429.
 
 Change API_KEY in https://github.com/Jayati14Ghosh/news-app/blob/main/src/components/AllNews.js
+
 List of API KEY - https://github.com/Jayati14Ghosh/news-app/blob/main/extraApi.md
 
 **Step 1 -**
 Go to AllNews.js
+
 **step 2 -**
 Search for API_KEY
+
 **step 3 -**
 const API_KEY = "add new api key here"
 
