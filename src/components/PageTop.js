@@ -4,7 +4,7 @@ import {useState, useEffect} from 'react';
 function PageTop(){
   const [goTop, setGoTop] = useState(false);
   const handlePageTop = ()=>{
-      window.scrollTo(0, 0);
+      window.scrollTo({top: 0, behavior: 'smooth'});
   }
 
   useEffect(() => {

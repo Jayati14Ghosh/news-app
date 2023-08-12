@@ -19,7 +19,7 @@ function AllNews({country,setCountry}){
   const [completeQuery, setCompleteQuery] = useState("");
   const [loader, setLoader] = useState(true);
 
-  const API_KEY = "f0b22a230a51451fa87bb51d07eccf0e"
+  const API_KEY = "044fdfb7739649b58989481b7b715d35"
   const API_URL = `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=${API_KEY}&category=${category}&page=${page}&pageSize=${pageSize}&q=${completeQuery}`;
 
   const getNews = async ()=>{
@@ -30,30 +30,30 @@ function AllNews({country,setCountry}){
   }
 
   const handleNext = ()=>{
+    window.scrollTo({top: 0, behavior: 'smooth'});
     setPage(page + 1);
-    window.scrollTo(0, 0);
-  }
+    }
 
   const handlePrev = ()=>{
+    window.scrollTo({top: 0, behavior: 'smooth'});
     setPage(page-1);
-    window.scrollTo(0, 0);
   }
 
   const handleCountryChange = (e)=>{
     setPage(1);
-    window.scrollTo(0, 0);
+    window.scrollTo({top: 0, behavior: 'smooth'});
   }
 
   const handleCategoryChange = (e)=>{
     setCategory(e.target.value);
     setPage(1);
-    window.scrollTo(0, 0);
+    window.scrollTo({top: 0, behavior: 'smooth'});
   }
 
   const handleSearchSubmit = (e)=>{
     e.preventDefault();
     setCompleteQuery(query);
-    window.scrollTo(0, 0);
+    window.scrollTo({top: 0, behavior: 'smooth'});
     setPage(1);
     setQuery("");
   }
@@ -121,12 +121,12 @@ function AllNews({country,setCountry}){
               }
             </div>
             <div className="btn-group">
-                {
-                  page>1?<button className="btn-page" onClick={handlePrev}>← Previous page</button>:""
-                }
-                {
-                  totalArticlesNo/page>pageSize?<button className="btn-page" onClick={handleNext}>Next Page →</button>:""
-                }
+              {
+                page>1?<button className="btn-page" onClick={handlePrev}>← Previous page</button>:""
+              }
+              {
+                totalArticlesNo/page>pageSize?<button className="btn-page" onClick={handleNext}>Next Page →</button>:""
+              }
             </div>
         </div>
         <div className="sidebar-group">
