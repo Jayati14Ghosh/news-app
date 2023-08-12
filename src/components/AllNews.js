@@ -7,10 +7,10 @@ import SingleNews from './SingleNews';
 import Search from './Search';
 import Breadcrumb from './Breadcrumb';
 import Loader from './Loader';
+import Marquee from "react-fast-marquee";
 
-function AllNews(){
+function AllNews({country,setCountry}){
   const [category, setCategory] = useState("general");
-  const [country,setCountry] = useState("us");
   const [bunchArticles, setBunchArticles] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(17);
@@ -19,7 +19,7 @@ function AllNews(){
   const [completeQuery, setCompleteQuery] = useState("");
   const [loader, setLoader] = useState(true);
 
-  const API_KEY = "68769665e4e644a8ab24725e2ba11057"
+  const API_KEY = "f0b22a230a51451fa87bb51d07eccf0e"
   const API_URL = `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=${API_KEY}&category=${category}&page=${page}&pageSize=${pageSize}&q=${completeQuery}`;
 
   const getNews = async ()=>{
@@ -40,7 +40,6 @@ function AllNews(){
   }
 
   const handleCountryChange = (e)=>{
-    setCountry(e.target.value);
     setPage(1);
     window.scrollTo(0, 0);
   }
@@ -75,6 +74,15 @@ function AllNews(){
   return(
     <>
     <div className="container-block">
+      <div className="marquee-group">
+        <div className="breaking-news">Breaking News</div>
+        <Marquee pauseOnHover={true} height="10px">
+          {bunchArticles.map((item, index)=>
+              <span key={index}><a href={item.url} target="_blank">{item.title}</a></span>
+            )
+          }
+        </Marquee>
+      </div>
       <Breadcrumb
         category={category}
         country={country}
@@ -117,7 +125,7 @@ function AllNews(){
                   page>1?<button className="btn-page" onClick={handlePrev}>← Previous page</button>:""
                 }
                 {
-                  totalArticlesNo/page>=pageSize?<button className="btn-page" onClick={handleNext}>Next Page →</button>:""
+                  totalArticlesNo/page>pageSize?<button className="btn-page" onClick={handleNext}>Next Page →</button>:""
                 }
             </div>
         </div>
@@ -129,7 +137,7 @@ function AllNews(){
             handleQueryUpdate={handleQueryUpdate}
             handleBackToOrigin={handleBackToOrigin}
           />
-          
+
           <Category
             handleCategoryChange={handleCategoryChange}
           />
